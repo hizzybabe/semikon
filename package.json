@@ -13,9 +13,9 @@
       "serve": "^14.0.0"
     },
     "scripts": {
-      "start": "react-scripts start",
+      "start": "serve -s build",
       "build": "GENERATE_SOURCEMAP=false react-scripts build",
-      "serve": "serve -s build",
+      "dev": "react-scripts start",
       "test": "react-scripts test",
       "eject": "react-scripts eject",
       "heroku-postbuild": "npm run build"
