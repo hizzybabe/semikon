@@ -48,21 +48,21 @@ const StockDashboard: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading stocks data...</div>;
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Semiconductor Stocks Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="stock-dashboard">
+      <h1 className="dashboard-title">Semiconductor Stocks Dashboard</h1>
+      <div className="stocks-grid">
         {stocksData.map((stock) => (
           <div
             key={stock.ticker}
-            className="p-4 border rounded-lg shadow-md"
+            className="stock-card"
           >
-            <h2 className="text-xl font-semibold">{stock.ticker}</h2>
-            <p className="text-2xl">${stock.price.toFixed(2)}</p>
-            <p className={`${stock.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <h2 className="stock-ticker">{stock.ticker}</h2>
+            <p className="stock-price">${stock.price.toFixed(2)}</p>
+            <p className={`stock-change ${stock.change >= 0 ? 'positive' : 'negative'}`}>
               {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)} ({stock.changePercent.toFixed(2)}%)
             </p>
           </div>
