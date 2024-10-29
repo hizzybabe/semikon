@@ -83,6 +83,19 @@ body {
   padding: 2rem;
 }
 
+.error {
+  text-align: center;
+  color: #e53e3e;
+  padding: 2rem;
+  font-size: 1.2rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 600px;
+  border: 1px solid #feb2b2;
+}
+
 @media (max-width: 768px) {
   .App {
     padding: 1rem;

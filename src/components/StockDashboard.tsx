@@ -11,12 +11,20 @@ interface StockData {
 const StockDashboard: React.FC = () => {
   const [stocksData, setStocksData] = useState<StockData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const tickers = ['NVDA', 'AMD', 'INTC', 'AVGO', 'QCOM', 'TSM', 'ASML'];
 
   useEffect(() => {
     const fetchStockData = async () => {
       try {
+        setError(null);
+        setLoading(true);
+
+        if (!process.env.REACT_APP_POLYGON_API_KEY) {
+          throw new Error('Polygon API key is not configured');
+        }
+
         const responses = await Promise.all(
           tickers.map(ticker =>
             axios.get(`https://api.polygon.io/v2/aggs/ticker/${ticker}/prev?apiKey=${process.env.REACT_APP_POLYGON_API_KEY}`)
@@ -34,9 +42,10 @@ const StockDashboard: React.FC = () => {
         });
 
         setStocksData(processedData);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching stock data:', error);
+        setError(error instanceof Error ? error.message : 'Failed to fetch stock data');
+      } finally {
         setLoading(false);
       }
     };
@@ -49,6 +58,10 @@ const StockDashboard: React.FC = () => {
 
   if (loading) {
     return <div className="loading">Loading stocks data...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
   }
 
   return (
